@@ -20,6 +20,7 @@ player_vars = pulp.LpVariable.dicts('Players', player_names, lowBound=0, cat='Bi
 
 # Definieren der Zielfunktion
 model += pulp.lpSum([player_points[i] * player_vars[i] for i in player_names]), 'Total Points'
+print(model)
 
 # Budgetbeschränkung
 model += pulp.lpSum([player_costs[i] * player_vars[i] for i in player_names]) <= budget, 'Total Cost'
