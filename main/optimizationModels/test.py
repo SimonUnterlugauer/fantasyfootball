@@ -1,4 +1,4 @@
-from pulp import LpProblem, LpVariable, LpMaximize, lpSum
+from pulp import LpProblem, LpVariable, LpMaximize, lpSum, LpInteger
 import psycopg2
 
 def select_best_player(risk_approach):
@@ -25,7 +25,7 @@ def select_best_player(risk_approach):
     model = LpProblem('Fantasy_Football_Team', LpMaximize)
 
     # Create decision variables
-    player_vars = LpVariable.dicts("Player", [player[0] for player in players], lowBound=0, cat="Binary")
+    player_vars = LpVariable.dicts("Player", [player[0] for player in players], lowBound=0, cat='Binary')
 
     # Definieren der Zielfunktion
     model += lpSum(
@@ -33,14 +33,20 @@ def select_best_player(risk_approach):
           ((1-risk_approach) * player[6] if player[6] is not None else 1) / ((1-risk_approach) * player[5] if player[5] is not None and player[5] != 0 else 1000))
          * player_vars[player[0]] for index, player in enumerate(players)]), 'TotalPoints'
 
+
+    # Create the constraint for selecting only one player
+    model += lpSum(player_vars.values()) == 1, "SelectOnePlayer"
+
     print(model)
     # Solve the optimization problem
     model.solve()
     best_player = None
+    # Print decision variables
+    for player_name, player_var in player_vars.items():
+        print(f"Player: {player_name}, Decision Variable: {player_var}, Value: {player_var.value()}")
 
     for player in player_vars:
         if player_vars[player].value() == 1:
-            print(player_vars[player].value())
             best_player = player
             break
 
@@ -52,8 +58,6 @@ def select_best_player(risk_approach):
 def get_player_position(player):
     ## get name of player
     name = player[0]
-    #name = player["name"] ####????
-    # Connect to PostgreSQL database
     conn = psycopg2.connect(
         host='localhost',
         database='posty',

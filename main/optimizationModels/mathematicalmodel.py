@@ -40,6 +40,8 @@ model.solve()
 # Ausgabe der Ergebnisse
 print('Fantasy Football Team:')
 for player in player_names:
+    print(player_vars[player].value())
+    print(player)
     if player_vars[player].value() == 1:
         print(player)
 
