@@ -112,7 +112,7 @@ for row in te_rows:
 
 for row in def_rows:
     player_name = ' '.join(row[0].split()[:2])
-    team_name = ' '.join(row[0].split()[2:])
+    team_name = ' '.join(row[0].split()[:2])
     points = row[2]
     difference = points - def_average_points
     position = "DEF"

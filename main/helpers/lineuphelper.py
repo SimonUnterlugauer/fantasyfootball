@@ -14,5 +14,21 @@ maxPosition = {
     "KI": 1,
     "DEF": 1,
 }
+team = [
+    "Patrick Mahomes",
+    "Travis Kelce",
+    "Justin Jefferson",
+    "Austin Ekeler",
+    "Nick Chubb",
+    "Jaylen Hurts",
+    "Cooper Kupp",
+    "Derrick Henry",
+    "George Kittle"
+]
 def find_best_lineup(team, week, maxPosition):
-    drafthelper.calculate_weekly_score("Patrick Mahomes", "week_18", 0.5)
+    for player in team:
+        drafthelper.get_player_position(player)
+        drafthelper.calculate_weekly_score(player, week, 0.5)
+
+
+find_best_lineup()

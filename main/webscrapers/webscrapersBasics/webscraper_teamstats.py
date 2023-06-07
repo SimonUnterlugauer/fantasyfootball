@@ -57,10 +57,4 @@ schedule_array = [
 ]
 
 
-
-
-
-
-
-
 insert_schedule("CAR", schedule_array)
