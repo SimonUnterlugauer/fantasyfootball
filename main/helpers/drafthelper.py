@@ -20,7 +20,7 @@ def get_player_position(player):
     # Close the cursor and database connection
     cursor.close()
     conn.close()
-    print(position)
+    #print(position)
 
     return position
 
@@ -77,6 +77,7 @@ def get_opponents_strength(player_name, week):
     if opponent == "BYE" or opponent is None:
         strength = float('inf')
     else:
+        print(opponent)
         ## get opponents strength as wins
         cursor.execute("SELECT projected_strength FROM team_assessment WHERE team = %s", (opponent,))
         strength_total = cursor.fetchone()
@@ -86,6 +87,7 @@ def get_opponents_strength(player_name, week):
         ##get opponents def rush strength
         cursor.execute("SELECT rush_yards_against FROM teams_def_stats_copy WHERE team = %s", (opponent,))
         strength_def_rush = cursor.fetchone()
+        print(strength_def_rush)
         strength_def_rush = strength_def_rush[0]
         cursor.execute("SELECT rush_yards_against FROM teams_def_stats_copy WHERE team = %s", ("Avg Team",))
         strength_def_rush_avg = cursor.fetchone()
@@ -145,7 +147,7 @@ def calculate_player_avg_score(player_name, weight_forecast):
         else:
             points += weight_forecast * (points_forecasted / 17) ##
             points += (1-weight_forecast) * (average_points)
-    print(points)
+    #print(points)
 
     return points
 
@@ -155,7 +157,7 @@ def calculate_weekly_score(player_name, week, weight_forecast):
 
     ## get opponents strength
     opponent_strength = get_opponents_strength(player_name, week)
-    print(opponent_strength)
+    #print(opponent_strength)
 
     ## get player scores
     avg_player_score = calculate_player_avg_score(player_name, weight_forecast)
@@ -165,8 +167,5 @@ def calculate_weekly_score(player_name, week, weight_forecast):
     return weekly_score
 
 
-calculate_player_avg_score("Bryce Young", 0.5)
-calculate_weekly_score("Patrick Mahomes", "week_12", 0.5)
-get_player_position("SF")
 
 
