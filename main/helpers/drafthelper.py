@@ -2,7 +2,6 @@ import psycopg2
 
 def get_player_position(player):
     ## get name of player
-    name = player[0]
     conn = psycopg2.connect(
         host='localhost',
         database='posty',
@@ -14,13 +13,14 @@ def get_player_position(player):
     cursor = conn.cursor()
 
     # Retrieve position and teamname data from the database for the specified player name
-    cursor.execute("SELECT position FROM projections_all_diff WHERE name = %s", (name,))
+    cursor.execute("SELECT position FROM projections_all_diff WHERE name = %s", (player,))
     position = cursor.fetchone()
     position = position[0]
 
     # Close the cursor and database connection
     cursor.close()
     conn.close()
+    print(position)
 
     return position
 
@@ -155,6 +155,7 @@ def calculate_weekly_score(player_name, week, weight_forecast):
 
     ## get opponents strength
     opponent_strength = get_opponents_strength(player_name, week)
+    print(opponent_strength)
 
     ## get player scores
     avg_player_score = calculate_player_avg_score(player_name, weight_forecast)
@@ -165,6 +166,7 @@ def calculate_weekly_score(player_name, week, weight_forecast):
 
 
 calculate_player_avg_score("Bryce Young", 0.5)
-calculate_weekly_score("Patrick Mahomes", "week_18", 0.5)
+calculate_weekly_score("Patrick Mahomes", "week_12", 0.5)
+get_player_position("SF")
 
 
