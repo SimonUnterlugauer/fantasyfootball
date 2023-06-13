@@ -4,10 +4,10 @@ import psycopg2
 from pulp import LpProblem, LpVariable, LpMaximize, lpSum
 
 sys.path.append("../helpers")  # Add the parent directory to the Python path
-import drafthelper
+import lineuphelper
 
-drafthelper.get_opponents_strength("Patrick Mahomes", "week_3")
 
-def find_best_lineup(team, opponent, week):
-    for player in team:
-        drafthelper.get_opponents_strength(player, week)
+team = ["Patrick Mahomes", "Jalen Hurts","Josh Jacobs", "Austin Ekeler", "Davante Adams", "Stefon Diggs",
+        "Cooper Kupp", "Justin Jefferson", "Nick Chubb", "Saquon Barkley", "Travis Kelce", "George Kittle", "PHI", "LV",
+        "Justin Tucker"]
+lineuphelper.find_optimal_lineup(team, "week_12", 0.5)

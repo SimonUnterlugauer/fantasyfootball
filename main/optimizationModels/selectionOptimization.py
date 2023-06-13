@@ -7,6 +7,7 @@ sys.path.append("../helpers")  # Add the parent directory to the Python path
 import drafthelper
 
 
+## function that goes over all players and drafts the best possible option
 def select_best_player(risk_approach, max_position, current_number_players, exclude_players):
     # Connect to PostgreSQL database
     # Establish a connection to the PostgreSQL database
@@ -27,6 +28,7 @@ def select_best_player(risk_approach, max_position, current_number_players, excl
     )
 
     players = cursor.fetchall()
+    #print(players)
     # Erstellung des linearen Programmierungsmodells
     model = LpProblem('Fantasy_Football_Team', LpMaximize)
 
@@ -44,9 +46,10 @@ def select_best_player(risk_approach, max_position, current_number_players, excl
     model += lpSum(player_vars.values()) == 1, "SelectOnePlayer"
 
     # Add the position and player limits as constraints
+    ## if causes problems exchange player[0] with player -> db structure changes when deleted and retrieved new
     for position, max_count in maxPosition.items():
         model += lpSum([player_vars[player[0]] for player in players if
-                       drafthelper.get_player_position(player) == position]) <= max_count - current_number_players.get(position,
+                       drafthelper.get_player_position(player[0]) == position]) <= max_count - current_number_players.get(position,
                                                                                                            0), f"MaxPosition_{position}"
 
     # Add the already drafted players as constraints
@@ -68,7 +71,6 @@ def select_best_player(risk_approach, max_position, current_number_players, excl
             break
 
     return best_player
-
 
 
 maxPosition = {

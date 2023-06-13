@@ -1,5 +1,5 @@
 import pulp
-
+### nur random test am anfang um sich mit der pulp bib bekannt zu machen
 # Spielerdaten und Statistiken als Eingangsvariablen
 player_names = ['Tom_Brady', 'Patrick_Mahomes', 'Aaron_Rodgers', 'Christian_McCaffrey', 'Derrick_Henry']
 player_positions = {'Tom_Brady': 'QB', 'Patrick_Mahomes': 'QB', 'Aaron_Rodgers': 'QB', 'Christian_McCaffrey': 'RB', 'Derrick_Henry': 'RB'}

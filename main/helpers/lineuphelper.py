@@ -44,12 +44,6 @@ def find_optimal_lineup(team, week, weight_forecast):
 
 
 
-team = ["Patrick Mahomes", "Jalen Hurts","Josh Jacobs", "Austin Ekeler", "Davante Adams", "Stefon Diggs",
-        "Cooper Kupp", "Justin Jefferson", "Nick Chubb", "Saquon Barkley", "Travis Kelce", "George Kittle", "PHI", "LV",
-        "Justin Tucker"]
-find_optimal_lineup(team, "week_12", 0.5)
-
-
 
 
 
