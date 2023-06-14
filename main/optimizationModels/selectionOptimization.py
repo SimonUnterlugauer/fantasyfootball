@@ -57,13 +57,13 @@ def select_best_player(risk_approach, max_position, current_number_players, excl
         if player[0] in exclude_players:
             model += player_vars[player[0]] == 0, f"ExcludePlayer_{player[0]}"
 
-    print(model)
+    #print(model)
     # Solve the optimization problem
     model.solve()
     best_player = None
     # Print decision variables
-    for player_name, player_var in player_vars.items():
-        print(f"Player: {player_name}, Decision Variable: {player_var}, Value: {player_var.value()}")
+    #for player_name, player_var in player_vars.items():
+     #   print(f"Player: {player_name}, Decision Variable: {player_var}, Value: {player_var.value()}")
 
     for player in player_vars:
         if player_vars[player].value() == 1:
@@ -97,5 +97,5 @@ exclude_players = [
 ]
 
 
-best_player = select_best_player(0.5, maxPosition, current_number, exclude_players)
-print("Best player:", best_player)
+#best_player = select_best_player(0.5, maxPosition, current_number, exclude_players)
+#print("Best player:", best_player)

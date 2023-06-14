@@ -167,5 +167,3 @@ def calculate_weekly_score(player_name, week, weight_forecast):
     return weekly_score
 
 
-get_player_position("Patrick Mahomes")
-
