@@ -8,6 +8,7 @@ def get_player_position(player):
         user='sulu',
         password='Nadine1995'
     )
+    #print(player)
 
     # Create a cursor to interact with the database
     cursor = conn.cursor()
@@ -165,5 +166,3 @@ def calculate_weekly_score(player_name, week, weight_forecast):
     weekly_score = (avg_player_score/opponent_strength)
     print(weekly_score)
     return weekly_score
-
-
