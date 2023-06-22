@@ -57,7 +57,6 @@ def calculate_lineup_score(team,  week):
         score = drafthelper.calculate_week_score(player, week)
         total_score += score
 
-
     return total_score
 
 
