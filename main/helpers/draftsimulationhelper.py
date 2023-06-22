@@ -19,7 +19,7 @@ def draft_player(already_drafted):
 
     query = "SELECT player FROM mock_draft WHERE player NOT IN (%s) ORDER BY rank LIMIT 1;"
     values = tuple([name.strip(" '") for name in already_drafted_str.split(',')])
-    print(values)
+    #print(values)
     # Generate the placeholder string for the values
     placeholders = ', '.join(['%s'] * len(values))
 
@@ -34,7 +34,7 @@ def draft_player(already_drafted):
 
     # Close the cursor
     cursor.close()
-    print(next_player)
+    #print(next_player)
 
     return next_player
 
@@ -58,7 +58,7 @@ def draft_kicker(already_drafted):
     already_drafted_str = ", ".join([f"'{player}'" for player in already_drafted])
     query = "SELECT name FROM mock_draft_kicker WHERE name NOT IN (%s) ORDER BY rank LIMIT 1;"
     values = tuple([name.strip(" '") for name in already_drafted_str.split(',')])
-    print(values)
+    #print(values)
     # Generate the placeholder string for the values
     placeholders = ', '.join(['%s'] * len(values))
 
@@ -73,7 +73,7 @@ def draft_kicker(already_drafted):
 
     # Close the cursor
     cursor.close()
-    print(next_player)
+    #print(next_player)
 
     return next_player
 
@@ -92,7 +92,7 @@ def draft_def(already_drafted):
     already_drafted_str = ", ".join([f"'{player}'" for player in already_drafted])
     query = "SELECT name FROM mock_draft_def WHERE name NOT IN (%s) ORDER BY rank LIMIT 1;"
     values = tuple([name.strip(" '") for name in already_drafted_str.split(',')])
-    print(values)
+    #print(values)
     # Generate the placeholder string for the values
     placeholders = ', '.join(['%s'] * len(values))
 

@@ -9,6 +9,24 @@ import draftsimulationhelper
 import selectionOptimization
 import drafthelper
 
+
+def getPlayerCount(team):
+    numPlayers =  {
+        "QB": 0,
+        "RB": 0,
+        "WR": 0,
+        "TE": 0,
+        "KI": 0,
+        "DEF": 0,
+    }
+    for player in team:
+        position = drafthelper.get_player_position(player)
+        numPlayers[position] += 1
+
+    return numPlayers
+
+
+
 def simulate_draft_round(num_teams, position, teams, already_drafted, maxPosition, currentNumber, way):
     already_drafted = already_drafted
     if len(teams) == 0:
@@ -23,7 +41,11 @@ def simulate_draft_round(num_teams, position, teams, already_drafted, maxPositio
                 teams[i].append(drafted_player)
                 already_drafted.append(drafted_player)
             else:
-                drafted_player = selectionOptimization.select_best_player(0.5, maxPosition, currentNumber[i], already_drafted)
+                ### nächstes mal eine funktion die die anzahl meiner spieler zählt und maximale spieler aufstellt
+                player_count = getPlayerCount(teams[i])
+                #print(player_count)
+                #print(maxPosition)
+                drafted_player = selectionOptimization.select_best_player_alt(0.5, maxPosition, player_count, already_drafted)
                 teams[i].append(drafted_player)
                 already_drafted.append(drafted_player)
         if (way == "wrong"):
@@ -32,7 +54,10 @@ def simulate_draft_round(num_teams, position, teams, already_drafted, maxPositio
                 teams[num_teams- (i+1)].append(drafted_player)
                 already_drafted.append(drafted_player)
             else:
-                drafted_player = selectionOptimization.select_best_player(0.5, maxPosition, currentNumber[i], already_drafted)
+                player_count = getPlayerCount(teams[num_teams- (i+1)])
+                print(player_count)
+                print(maxPosition)
+                drafted_player = selectionOptimization.select_best_player_alt(0.5, maxPosition, player_count, already_drafted)
                 teams[num_teams- (i+1)].append(drafted_player)
                 already_drafted.append(drafted_player)
     return teams
@@ -49,10 +74,12 @@ def simulate_draft(num_teams, position, draft_rounds, maxPosition, currentNumber
                 for player in teams[y]:
                     #print(player)
                     already_drafted.append(player)
-        if i % 2 == 0:
-            teams = simulate_draft_round(num_teams, position, teams, already_drafted, maxPosition, currentNumber, "wrong")
-        else:
+        if i % 2 == 0 or i == 0:
+            print("Right")
             teams = simulate_draft_round(num_teams, position, teams, already_drafted, maxPosition, currentNumber, "right")
+        else:
+            print("Wrong")
+            teams = simulate_draft_round(num_teams, position, teams, already_drafted, maxPosition, currentNumber, "wrong")
     for y in range(len(teams)):
         drafted_def = draftsimulationhelper.draft_def(already_drafted_def)
         already_drafted_def.append(drafted_def)
@@ -65,10 +92,10 @@ def simulate_draft(num_teams, position, draft_rounds, maxPosition, currentNumber
     return teams
 
 maxPosition = {
-    "QB": 1,
-    "RB": 3,
-    "WR": 2,
-    "TE": 1,
+    "QB": 2,
+    "RB": 5,
+    "WR": 5,
+    "TE": 2,
     "KI": 1,
     "DEF": 1,
 }

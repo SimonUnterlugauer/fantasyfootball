@@ -166,3 +166,39 @@ def calculate_weekly_score(player_name, week, weight_forecast):
     weekly_score = (avg_player_score/opponent_strength)
     print(weekly_score)
     return weekly_score
+
+def calculate_player_avg_score_projected(player_name, weight_forecast):
+    conn = psycopg2.connect(
+        host='localhost',
+        database='posty',
+        user='sulu',
+        password='Nadine1995'
+    )
+
+    # Create a cursor to interact with the database
+    cursor = conn.cursor()
+
+    # Retrieve position and teamname data from the database for the specified player name
+    cursor.execute("SELECT points_forecasted FROM fantasy_data_complete WHERE name = %s", (player_name,))
+    data = cursor.fetchall()
+
+    points = 0
+    for row in data:
+        points_forecasted = row[0]
+        points += (points_forecasted / 17)
+    #print(points)
+
+    return points
+
+def calculate_week_score(player_name, week, weight_forecast):
+    ## get opponents strength
+    opponent_strength = get_opponents_strength(player_name, week)
+    # print(opponent_strength)
+
+    ## get player scores
+    avg_player_score = calculate_player_avg_score_projected(player_name, weight_forecast)
+
+    weekly_score = (avg_player_score / opponent_strength)
+    print(weekly_score)
+    return weekly_score
+
