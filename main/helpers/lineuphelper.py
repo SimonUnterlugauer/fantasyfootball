@@ -43,20 +43,22 @@ def find_optimal_lineup(team, week, weight_forecast):
         for player in selected_players[pos]:
             total_score += player[1]
 
-    print(selected_players)
-    print(total_score)
+    #print(selected_players)
+    #print(total_score)
 
     return selected_players
 
-def calculate_lineup_score(team,  week):
+
+def calculate_lineup_score(team, week):
 
     total_score = 0
 
-    for player in team:
-        position = drafthelper.get_player_position(player)
-        score = drafthelper.calculate_week_score(player, week)
-        total_score += score
+    for pos in team:
+        for player in team[pos]:
+            score = drafthelper.calculate_week_score(player[0], week)
+            total_score += score
 
+    print(total_score)
     return total_score
 
 

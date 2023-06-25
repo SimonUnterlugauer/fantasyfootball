@@ -9,4 +9,6 @@ import lineuphelper
 team = ["Patrick Mahomes", "Geno Smith","Amari Cooper", "Christian Kirk", "Mike Evans", "Jakobi Meyers",
         "Dalvin Cook", "Derrick Henry", "Jamaal Williams","Alexander Mattison", "Travis Kelce",
         "George Kittle", "WAS", "Jake Moody"]
-lineuphelper.find_optimal_lineup(team, "week_13", 0.5)
+team = lineuphelper.find_optimal_lineup(team, "week_18", 0.5)
+
+score = lineuphelper.calculate_lineup_score(team, "week_18")
